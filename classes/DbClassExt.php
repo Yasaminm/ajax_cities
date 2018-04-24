@@ -5,6 +5,17 @@ class DbClassExt extends DbClass {
    private $columns = '*';
  private $statement = '';
  private $orderby = '';
+ private $where = '';
+ private $groupby = '';
+
+ public function setGroupBy(string $param) {
+     $this->groupby = $param;
+ }
+ 
+ public function setWhere(string $param){
+     $this->where = $param;
+ }
+
 
  /**
   * Sort by columns
@@ -32,11 +43,21 @@ class DbClassExt extends DbClass {
 
  public function getData() {
 
-  $o = '';
-  if ($this->orderby !== '') {
-   $o = ' ORDER BY ' . $this->orderby;
-  }
-  $query = sprintf("SELECT %s %s FROM %s %s", $this->statement, $this->columns, $this->tableName, $o);
+//  $o = '';
+//  $w = '';
+//  if ($this->orderby !== '') {
+//   $o = ' ORDER BY ' . $this->orderby;
+//  }
+  $o = ($this->orderby !== '')? ' ORDER BY ' . $this->orderby : '';
+//  if ($this->where !== '') {
+//   $w = ' WHERE ' . $this->where;
+//  }
+  $w = ($this->where !== '')? $w = ' WHERE ' . $this->where : '';
+  
+  $g = ($this->groupby !== '')? $g = ' GROUP BY ' . $this->groupby : '';
+  
+  $query = sprintf("SELECT %s %s FROM %s %s %s %s", 
+          $this->statement, $this->columns, $this->tableName, $w, $g, $o);
   $stmt = $this->query($query);
   return $stmt->fetchAll(PDO::FETCH_ASSOC);
  }

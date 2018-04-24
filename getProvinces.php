@@ -1,5 +1,11 @@
 <?php
 
+$iso2 = filter_input(INPUT_GET, 'iso2', FILTER_SANITIZE_STRING);
+
+if(strlen($iso2) !== 2){
+   exit();
+}
+
 require_once './config.php';
 require_once './classes/DbClass.php';
 require_once './classes/FilterForm.php';
@@ -14,23 +20,15 @@ try {   //DB connection:
                 echo $exc->getCode();
             }
             
-//            $db->setTable('tb_cities');
-            
-//           $data = $db->getAllData();
-//            
-//           var_dump($data);
-            
-            
-            ///////////////////////////////////
             
 $db->setTable('tb_cities');
 
-$db->setColumns('iso2, country');
-//$db->setStatement('');
-$db->setGroupBy('country');
-$db->setOrderBy('country ASC');
+$db->setColumns('province');
+//$db->setStatement('DISTINCT');
+$db->setGroupBy('province');
+$db->setOrderBy('province ASC');
+$db->setWhere("iso2='$iso2'");
 $data = $db->getData();
-
 
 echo json_encode($data);
 

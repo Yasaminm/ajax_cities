@@ -1,13 +1,48 @@
 (function () {
 
- var selectCountry = document.querySelector('[name="country"]');
+ var selectCountry, selectProvince;
 
+window.addEventListener('load', init);
 
- ajax('get', 'getCountries.php', {}, fillCountries);
+function init(){
+    selectCountry = document.querySelector('[name="country"]');
+    selectCountry.addEventListener('change', getProvinces);
+    selectProvince = document.querySelector('[name="province"]');
+    
+    
+    ajax('get', 'getCountries.php', {}, fillCountries);
+}
+
+ function removeOptions(selectbox)
+{
+    var i;
+    for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+    {
+        selectbox.remove(i);
+    }
+}
+ function getProvinces(){
+
+removeOptions(selectProvince);
+ajax('get', 'getProvinces.php', {'iso2': this.value}, fillProvinces);
+
+ }
+ 
+ function fillProvinces(json){
+//     console.log(json);
+     var provinces = JSON.parse(json);
+  for (var i = 0; i < provinces.length; i++) {
+   var opt = document.createElement('option');
+   opt.text = provinces[i].province;
+   opt.value= provinces[i].province;//AF
+//   console.log(provinces[i]);
+   selectProvince.appendChild(opt);
+  }
+ }
  
  function fillCountries(json) {
   var countries = JSON.parse(json);
-  console.log(json);
+//  console.log(json);
   for (var i = 0; i < countries.length; i++) {
    var opt = document.createElement('option');
    opt.text = countries[i].country;//Afghanistan
