@@ -25,7 +25,7 @@ try {   //DB connection:
             
 $db->setTable('tb_cities');
 
-$db->setColumns('iso2, country');
+$db->setColumns('iso3, country');
 //$db->setStatement('');
 $db->setGroupBy('country');
 $db->setOrderBy('country ASC');

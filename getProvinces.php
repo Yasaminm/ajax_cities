@@ -1,8 +1,8 @@
 <?php
 
-$iso2 = filter_input(INPUT_GET, 'iso2', FILTER_SANITIZE_STRING);
+$iso3 = filter_input(INPUT_GET, 'iso3', FILTER_SANITIZE_STRING);
 
-if(strlen($iso2) !== 2){
+if(strlen($iso3) !== 3){
    exit();
 }
 
@@ -27,7 +27,7 @@ $db->setColumns('province');
 //$db->setStatement('DISTINCT');
 $db->setGroupBy('province');
 $db->setOrderBy('province ASC');
-$db->setWhere("iso2='$iso2'");
+$db->setWhere("iso3='$iso3'");
 $data = $db->getData();
 
 echo json_encode($data);

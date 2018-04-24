@@ -24,7 +24,7 @@ function init(){
  function getProvinces(){
 
 removeOptions(selectProvince);
-ajax('get', 'getProvinces.php', {'iso2': this.value}, fillProvinces);
+ajax('get', 'getProvinces.php', {'iso3': this.value}, fillProvinces);
 
  }
  
@@ -46,7 +46,7 @@ ajax('get', 'getProvinces.php', {'iso2': this.value}, fillProvinces);
   for (var i = 0; i < countries.length; i++) {
    var opt = document.createElement('option');
    opt.text = countries[i].country;//Afghanistan
-   opt.value= countries[i].iso2;//AF
+   opt.value= countries[i].iso3;//AF
 //   console.log(opt.value);
    selectCountry.appendChild(opt);
   }
