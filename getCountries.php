@@ -30,9 +30,12 @@ $db->setStatement('DISTINCT');
 $db->setOrderBy('country ASC');
 $data = $db->getData();
 
-$countries = [];
-foreach ($data as $key => $row) {
- $countries[] = $row['iso2']. ';' . $row['country'];//AF;Afghanistan
-}
 
-echo implode(',', $countries);
+echo json_encode($data);
+
+//$countries = [];
+//foreach ($data as $key => $row) {
+// $countries[] = $row['iso2']. ';' . $row['country'];//AF;Afghanistan
+//}
+//
+//echo implode(',', $countries);
