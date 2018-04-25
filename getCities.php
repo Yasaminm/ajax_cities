@@ -1,5 +1,11 @@
 <?php
 
+$province = filter_input(INPUT_GET, 'province', FILTER_SANITIZE_STRING);
+
+if(!$province){
+   exit();
+}
+
 require_once './config.php';
 require_once './classes/DbClass.php';
 require_once './classes/FilterForm.php';
@@ -14,23 +20,15 @@ try {   //DB connection:
                 echo $exc->getCode();
             }
             
-//            $db->setTable('tb_cities');
-            
-//           $data = $db->getAllData();
-//            
-//           var_dump($data);
-            
-            
-            ///////////////////////////////////
             
 $db->setTable('tb_cities');
 
-$db->setColumns('iso3, country');
-//$db->setStatement('');
-$db->setGroupBy('country');
-$db->setOrderBy('country ASC');
+$db->setColumns('id, city');
+//$db->setStatement('DISTINCT');
+$db->setGroupBy('city');
+$db->setOrderBy('city ASC');
+$db->setWhere("province='$province'");
 $data = $db->getData();
-
 
 echo json_encode($data);
 

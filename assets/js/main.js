@@ -7,12 +7,18 @@ window.addEventListener('load', init);
 function init(){
     selectCountry = document.querySelector('[name="country"]');
     selectCountry.addEventListener('change', getProvinces);
+    selectCountry.addEventListener('change', function(){
+    removeOptions(selectCities);
+    });
     selectProvince = document.querySelector('[name="province"]');
+    selectProvince.addEventListener('change', getCities);
+    selectCities = document.querySelector('[name="city"]');
+    
     
     
     ajax('get', 'getCountries.php', {}, fillCountries);
 }
-
+///////////////////////////////////////
  function removeOptions(selectbox)
 {
     var i;
@@ -21,15 +27,31 @@ function init(){
         selectbox.remove(i);
     }
 }
+//////////////////////////////////////
+//function removeOptions(selectBox){
+//    
+//    var max = selectBox.options.length;
+//    
+//    for (var i = 1; i < max; i++){
+//        selectBox.removeChild(selectBox.options[1]);
+//    }
+//}
+////////////////////////////////////////
  function getProvinces(){
 
-removeOptions(selectProvince);
 ajax('get', 'getProvinces.php', {'iso3': this.value}, fillProvinces);
+
+ }
+ function getCities(){
+
+ajax('get', 'getCities.php', {'province': this.value}, fillCities);
 
  }
  
  function fillProvinces(json){
 //     console.log(json);
+//selectProvince.options.length = 0;
+    removeOptions(selectProvince);
      var provinces = JSON.parse(json);
   for (var i = 0; i < provinces.length; i++) {
    var opt = document.createElement('option');
@@ -37,6 +59,19 @@ ajax('get', 'getProvinces.php', {'iso3': this.value}, fillProvinces);
    opt.value= provinces[i].province;//AF
 //   console.log(provinces[i]);
    selectProvince.appendChild(opt);
+  }
+ }
+ 
+ function fillCities(json){
+//     console.log(json);
+    removeOptions(selectCities);
+     var cities = JSON.parse(json);
+  for (var i = 0; i < cities.length; i++) {
+   var opt = document.createElement('option');
+   opt.text = cities[i].city;
+   opt.value= cities[i].city;
+//   console.log(cities[i]);
+   selectCities.appendChild(opt);
   }
  }
  

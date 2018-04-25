@@ -14,7 +14,7 @@ require_once './data.php';
 
 
 try {   //DB connection:
-            $db = new DbClassExt('mysql:host=' . HOST . ';dbname=' . DB, USER, PASSWORD);
+            $db = new DbClassExt('mysql:host=' . HOST . ';dbname=' . DB , USER, PASSWORD);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $exc) {
                 echo $exc->getCode();
