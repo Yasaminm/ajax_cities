@@ -1,6 +1,7 @@
 (function () {
 
- var selectCountry, selectProvince;
+ var selectCountry, selectProvince, selectCities, tableBody;
+ var infoKeys = ['iso3', 'city', 'province', 'country', 'pop'];
 
 window.addEventListener('load', init);
 
@@ -14,6 +15,9 @@ function init(){
     selectProvince.addEventListener('change', getCities);
     selectCities = document.querySelector('[name="city"]');
     
+    
+    selectCities.addEventListener('change', getCityTable);
+   tableBody = document.querySelector('#tableBody');
     
     
     ajax('get', 'getCountries.php', {}, fillCountries);
@@ -48,6 +52,12 @@ ajax('get', 'getCities.php', {'province': this.value}, fillCities);
 
  }
  
+ function getCityTable(){
+
+ajax('get', 'getCityTable.php', {'id': this.value}, fillCityTable);
+
+ }
+ 
  function fillProvinces(json){
 //     console.log(json);
 //selectProvince.options.length = 0;
@@ -69,10 +79,25 @@ ajax('get', 'getCities.php', {'province': this.value}, fillCities);
   for (var i = 0; i < cities.length; i++) {
    var opt = document.createElement('option');
    opt.text = cities[i].city;
-   opt.value= cities[i].city;
+   opt.value= cities[i].id;
 //   console.log(cities[i]);
    selectCities.appendChild(opt);
   }
+ }
+ 
+ function fillCityTable(json){
+     var info = JSON.parse(json);
+     tableBody.innerHTML = '';
+     console.log(info);
+//     console.log(info["0"].country);
+var tr = document.createElement('tr');
+tableBody.appendChild(tr);
+        for (var i = 0; i < infoKeys.length ; i++) {
+            var td = document.createElement('td');
+            td.innerHTML = info[infoKeys[i]];
+            tr.appendChild(td);
+        }
+
  }
  
  function fillCountries(json) {

@@ -32,7 +32,7 @@
          <hr>
          <h2>City Info</h2>
          <hr>
-         <table class="table table-info">
+         <table class="table table-primary">
                 <thead>
                     <tr>
                         
@@ -43,14 +43,7 @@
                         <th>Population</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tbody id="tableBody">
                 </tbody>
             </table>
      </div>

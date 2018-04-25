@@ -2,7 +2,7 @@
 
 $province = filter_input(INPUT_GET, 'province', FILTER_SANITIZE_STRING);
 
-if(!$province){
+if(!is_string($province)){
    exit();
 }
 
