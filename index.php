@@ -34,19 +34,55 @@
          <hr>
          <table class="table table-primary">
                 <thead>
-                    <tr>
-                        
-                        <th>ISO</th>
-                        <th>City</th>
-                        <th>Province</th>
-                        <th>Country</th>
-                        <th>Population</th>
-                    </tr>
+                    <tr></tr>
                 </thead>
-                <tbody id="tableBody">
+                <tbody>
+                    <tr></tr>
                 </tbody>
             </table>
+         <hr>
+         <!--<button id="mapbtn" type="button">Map</button>-->
+         <div id="map"></div>
      </div>
+     
      <script src="assets/js/main.js" type="text/javascript"></script>
+     <script>
+//         var btn = document.querySelector('#mapbtn');
+//         btn.addEventListener('click', function(){
+//             initMap(34.5383729, 69.1840752, 15);
+//         });
+      var map;
+      var LAT = 13.0474878;
+      var LON = 80.068927;
+      var ZOOM = 8;
+      function initMap() {
+//          console.log(arguments);
+
+        if(arguments.length === 2){
+            LAT = arguments[0];
+            LON = arguments[1];
+//            ZOOM = arguments[2];
+            
+        }
+          var position = {lat: LAT, lng: LON}
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: position,
+          zoom: ZOOM
+        });
+        var marker = new google.maps.Marker({
+          position: position,
+          map: map,
+          title: 'Click to zoom'
+        });
+        
+        marker.addListener('click', function() {
+          map.setZoom(ZOOM);
+          map.setCenter(marker.getPosition());
+        });
+      }
+    </script>
+    
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuP_m2YE-E2FAgwzsK_ZO3YDeqw0oRSHM&callback=initMap" async defer></script>
+    
  </body>
 </html>
