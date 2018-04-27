@@ -2,3 +2,6 @@
     widht: 100%;
     min-height: 700px;
 }
+#ajaxLoader {
+    display: none;
+}
