@@ -1,6 +1,6 @@
 (function () {
 
- var selectCountry, selectProvinces, formAdmin, ajaxLoader;
+ var selectCountry, selectProvinces, formAdmin, ajaxLoader, btn, fieldCity;
 
  window.addEventListener('load', init);
 
@@ -14,9 +14,35 @@
   
   formAdmin = document.querySelector('#formAdmin');
   formAdmin.addEventListener('submit', sendForm);
+  
+  btn = document.querySelector('button');
+  fieldCity = document.querySelector('[name="city"]');
+  fieldCity.addEventListener('input', checkCity);
 
   ajax('get', 'getCountries.php', {}, fillCountries);
   
+ }
+ 
+ function checkCity(e){
+//     console.log(this.value);
+    var params = {
+        'city': this.value,
+        'province': selectProvinces.value,
+        'iso3': selectCountry.value
+        
+    }
+     ajax('get', 'checkCity.php',params,evaluationCity);
+ }
+ 
+ 
+ function evaluationCity(res){
+//     console.log(res);
+fieldCity.classList.remove('is-invalid');
+     if(res === '1'){
+         fieldCity.classList.add('is-invalid');
+//         btn.classList.add('disabled');
+//         btn.disabled;
+     }
  }
 
 /////////////////////////////////////////
@@ -45,18 +71,30 @@ return params;
 
 function sendForm(e){
     e.preventDefault();
+if(fieldCity.classList.contains('is-invalid')){
+    return false;
+}
 var params = serializeObject(this);
-console.log(params);
+//console.log(params);
 ajax('post', 'insertCity.php',params,sentForm);
 ajaxLoader.style.display = 'inline';
 }
 
-function sentForm(r){
+function sentForm(r, status){
     ajaxLoader.style.display = 'none';
-    if (r === '1' && status === 200){
-        //loader ausblenden
-        formAdmin.reset();
-    }
+  if (r === '1' && status === 200) {
+      console.log('green');
+   //loader ausblenden
+   btn.classList.remove("btn-outline-primary");
+   btn.classList.add("btn-success");
+   window.setTimeout(function () {
+    btn.classList.remove("btn-success");
+    btn.classList.add("btn-outline-primary");
+   }, 2000);
+   formAdmin.reset();
+  } else {
+   btn.classList.add("btn-danger");
+  }
 }
 
  function deleteOptions(selectBox) {

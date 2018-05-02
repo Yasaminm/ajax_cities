@@ -5,3 +5,7 @@
 #ajaxLoader {
     display: none;
 }
+
+.warning {
+    color: red;
+}

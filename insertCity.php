@@ -44,7 +44,7 @@ $data['iso2'] = $countryData[0]['iso2'];
 //var_dump($countryData);
 //var_dump($data);
 
-if(count($data >= 5)){
+if(count($data) >= 5){
     if($db->insert($data) > 0){
         echo 1;
     }else {
